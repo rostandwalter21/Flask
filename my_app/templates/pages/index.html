@@ -1,0 +1,145 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Page d'accueil {% endblock %}
+
+{% block content %}
+<main class="main-header">
+    <section class="page-heading">
+        <div>
+            <h1>Liste des Pokémon</h1>
+
+            <p>
+                Consulte, ajoute, modifie ou supprime tes Pokémon.
+            </p>
+        </div>
+
+        <a href="{{ url_for('main.pokemon_create_views') }}" class="btn btn-primary">
+            Ajouter un Pokémon
+        </a>
+    </section>
+    {% if (data|length == 0) %}
+    <div class="empty-message">
+
+        <h2>Aucun Pokémon enregistré</h2>
+
+        <p>
+            Commence par ajouter ton premier Pokémon.
+        </p>
+
+        <a href="" class="btn btn-primary">
+            Ajouter un Pokémon
+        </a>
+    </div>
+
+    {% else %}
+    <div class="pokemon-grid">
+        {% for pokemon in data %}
+        <article class="pokemon-card">
+
+            <div class="pokemon-image">
+                {% if pokemon.picture %}
+                <img src="{{ pokemon.picture }}" alt="Image de {{ pokemon.name }}">
+
+                {% else %}
+                <div class="no-image">
+                    Aucune image
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="pokemon-content">
+
+                <h2>
+                    {{ pokemon.name }}
+                </h2>
+
+                <div class="pokemon-statistics">
+
+                    <span>
+                        HP : <strong>{{ pokemon.hp }}</strong>
+                    </span>
+
+                    <span>
+                        CP : <strong>{{ pokemon.cp }}</strong>
+                    </span>
+
+                </div>
+
+                <p class="pokemon-types">
+                    Types : {{ pokemon.types }}
+                </p>
+
+                <div class="card-actions">
+
+                    <a href="{{ url_for('main.pokemon_details_views', id=pokemon.id) }}" class="btn btn-primary">
+                        Détails
+                    </a>
+
+                    <a href="{{ url_for('main.pokemon_edit_views', id=pokemon.id) }}"
+                        class="btn btn-secondary">Modifier</a>
+
+                    <!-- <form action="{{ url_for('main.pokemon_delete_views', id=pokemon.id) }}" method="POST"
+                        style="display:inline;">
+
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Supprimer ce Pokémon ?')">
+
+                            Supprimer
+
+                        </button>
+
+                    </form> -->
+
+                    <form id="delete-form-{{ pokemon.id }}"
+                        action="{{ url_for('main.pokemon_delete_views', id=pokemon.id) }}" method="POST"
+                        style="display:inline;">
+
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete({{ pokemon.id }})">
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </article>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <script>
+        Swal.fire({
+            icon: "{{ category }}",
+            title: "{{ message }}"                  
+        });
+    </script>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "Êtes-vous sûr ?",
+                text: "Cette action est irréversible !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Oui, supprimer",
+                cancelButtonText: "Annuler"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("delete-form-" + id).submit();
+                }
+            });
+        }
+    </script>
+</main>
+
+
+{% endblock %}

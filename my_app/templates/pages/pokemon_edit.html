@@ -1,0 +1,69 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Modifier Pokémon{% endblock %}
+
+{% block content %}
+
+<a href="{{ url_for('main.pokemon_views') }}">
+    Retour
+</a>
+
+<h1>Modifier {{ pokemon.name }}</h1>
+
+<form method="POST">
+
+    {% if errors %}
+        <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div>
+        <label>Nom</label>
+        <input
+            type="text"
+            name="name"
+            value="{{ form_data.get('name','') }}">
+    </div>
+
+    <div>
+        <label>HP</label>
+        <input
+            type="number"
+            name="hp"
+            value="{{ form_data.get('hp','') }}">
+    </div>
+
+    <div>
+        <label>CP</label>
+        <input
+            type="number"
+            name="cp"
+            value="{{ form_data.get('cp','') }}">
+    </div>
+
+    <div>
+        <label>Image</label>
+        <input
+            type="text"
+            name="picture"
+            value="{{ form_data.get('picture','') }}">
+    </div>
+
+    <div>
+        <label>Types</label>
+        <input
+            type="text"
+            name="types"
+            value="{{ form_data.get('types','') }}">
+    </div>
+
+    <button type="submit">
+        Modifier
+    </button>
+
+</form>
+
+{% endblock %}

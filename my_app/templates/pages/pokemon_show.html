@@ -1,0 +1,46 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Page détails pokemon {% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('main.pokemon_views' ) }}">Retourner a la page de liste</a>
+    <h1>Page de détails</h1>
+
+    <article class="pokemon-card">
+
+            <div class="pokemon-image">
+                {% if pokemon.picture %}
+                <img src="{{ pokemon.picture }}" alt="Image de {{ pokemon.name }}">
+
+                {% else %}
+                <div class="no-image">
+                    Aucune image
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="pokemon-content">
+
+                <h2>
+                    {{ pokemon.name }}
+                </h2>
+
+                <div class="pokemon-statistics">
+
+                    <span>
+                        HP : <strong>{{ pokemon.hp }}</strong>
+                    </span>
+
+                    <span>
+                        CP : <strong>{{ pokemon.cp }}</strong>
+                    </span>
+
+                </div>
+
+                <p class="pokemon-types">
+                    Types : {{ pokemon.types }}
+                </p>
+            </div>
+
+        </article>
+{% endblock  %}

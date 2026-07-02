@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titre %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sweetalert2.min.css') }}">
+    <script src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}">
+</head>
+
+<body>
+    {% include 'components/header.html' %}
+
+    <!-- <button onclick="successAlert()">
+        Tester SweetAlert
+    </button>   
+
+    <script>
+        function successAlert() {
+            Swal.fire({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success"
+        }); 
+        }
+    </script> -->
+
+    {% block content %}
+    {% endblock %}
+
+    {% include 'components/footer.html' %}
+</body>
+
+</html>

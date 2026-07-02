@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.container .boite {
+    background: skyblue;
+    flex: 1 300px;
+    height: 400px;
+}
